@@ -13,21 +13,29 @@ maxim holds ≈ 0.99). Caveat: one guitar, five days — a case study, not a pop
 
 ## Reports
 
-- **[General-audience summary](REPORT_general.md)** — plain-language write-up (< 1000 words).
-- **[Full technical report](REPORT_full.md)** — design, data translation, frequentist +
-  Bayesian analysis, robustness, limitations.
+Both reports are published as standalone web pages:
 
-The reports are also published as standalone web pages:
-**[general-audience summary](https://claude.ai/code/artifact/b12ce579-4f74-4c3a-8a56-0e0531d4c0a0)**
-· **[full technical report](https://claude.ai/code/artifact/a8912362-3f32-4930-8653-0cb145dc396c)**.
+- **[General-audience summary](https://claude.ai/code/artifact/b12ce579-4f74-4c3a-8a56-0e0531d4c0a0)**
+  — plain-language write-up (< 1000 words).
+- **[Full technical report](https://claude.ai/code/artifact/a8912362-3f32-4930-8653-0cb145dc396c)**
+  — design, data translation, frequentist + Bayesian analysis, robustness, limitations.
+
+(Their source HTML is also in this repo, as `tune_up_or_down.html` and `report_full.html`.)
+
+## Try it on your own guitar
+
+**[how_to.md](how_to.md)** is a beginner-friendly, no-experience-needed guide to recording
+the same kind of data on your own guitar and running the analysis. If you do, I'd love to
+hear what you find.
 
 ## Repository layout
 
 ```
-data/      source PDFs + the tidy/wide analysis datasets (CSV)
-scripts/   Python analysis (standard library only — no dependencies)
-*.md       the two reports
-*.html     web-page versions of the reports
+data/       source PDFs + the tidy/wide analysis datasets (CSV)
+scripts/    Python analysis (standard library only — no dependencies)
+*.html      the two reports as standalone web pages
+how_to.md   guide to running the experiment yourself
+README.md   this file
 ```
 
 ## Reproducing the analysis
