@@ -1,0 +1,205 @@
+<title>Tune Up or Tune Down?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+  :root{
+    --paper:#F7F5F0; --surface:#FFFFFF; --raise:#FCFAF6;
+    --ink:#23201B; --ink-soft:#5C554B; --ink-faint:#8A8175;
+    --line:#E4DED2; --line-soft:#EFEAE0;
+    --up:#B57F22; --up-ink:#8A5E12; --up-wash:#F3E9D5;
+    --down:#4E7891; --down-ink:#33586B; --down-wash:#E4EDF1;
+    --shadow:0 1px 2px rgba(35,32,27,.05), 0 8px 30px rgba(35,32,27,.06);
+  }
+  :root:not([data-theme="light"]){ }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#191510; --surface:#211C15; --raise:#241E16;
+      --ink:#EDE6D8; --ink-soft:#B3A997; --ink-faint:#867C6B;
+      --line:#342C21; --line-soft:#2A2319;
+      --up:#D69B3E; --up-ink:#E7B65E; --up-wash:#2C2416;
+      --down:#6FA0BC; --down-ink:#8FB9D0; --down-wash:#182631;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.34);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#191510; --surface:#211C15; --raise:#241E16;
+    --ink:#EDE6D8; --ink-soft:#B3A997; --ink-faint:#867C6B;
+    --line:#342C21; --line-soft:#2A2319;
+    --up:#D69B3E; --up-ink:#E7B65E; --up-wash:#2C2416;
+    --down:#6FA0BC; --down-ink:#8FB9D0; --down-wash:#182631;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.34);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    line-height:1.65; margin:0;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:44rem; margin:0 auto; padding:clamp(2rem,5vw,4.5rem) clamp(1.2rem,5vw,2rem) 4rem}
+  p{margin:0 0 1.15em; color:var(--ink)}
+  .lead{font-size:1.16rem; color:var(--ink-soft)}
+  strong{font-weight:600; color:var(--ink)}
+  em{font-style:italic}
+
+  h1,h2,h3{font-family:"Fraunces",Georgia,serif; text-wrap:balance; line-height:1.12; margin:0}
+  h1{font-size:clamp(2.4rem,7vw,3.7rem); font-weight:600; letter-spacing:-.015em}
+  h2{font-size:clamp(1.5rem,4vw,2rem); font-weight:600; margin:2.8em 0 .7em; letter-spacing:-.01em}
+  h3{font-size:1.12rem; font-weight:600; font-family:"IBM Plex Sans",sans-serif}
+
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:500;
+    letter-spacing:.22em; text-transform:uppercase; color:var(--up-ink);
+    margin:0 0 1.4rem;
+  }
+  .dek{font-family:"Fraunces",Georgia,serif; font-size:clamp(1.15rem,2.6vw,1.4rem);
+    font-weight:400; color:var(--ink-soft); font-style:italic; margin:1.1rem 0 0; max-width:34rem}
+  .byline{font-family:"IBM Plex Mono",monospace; font-size:.79rem; line-height:1.7;
+    color:var(--ink-soft); margin:1.5rem 0 0}
+  .byline b{color:var(--ink); font-weight:500}
+  .byline .ai{color:var(--down-ink)}
+  .meta{
+    font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--ink-faint);
+    letter-spacing:.02em; margin:1.8rem 0 0; display:flex; flex-wrap:wrap; gap:.5rem 1.1rem;
+  }
+  .meta span{white-space:nowrap}
+  .meta b{color:var(--ink-soft); font-weight:500}
+
+  /* six-string divider, thin to thick like real strings */
+  .strings{display:flex; flex-direction:column; gap:5px; margin:2.6rem 0}
+  .strings i{display:block; background:linear-gradient(90deg,var(--line),var(--ink-faint),var(--line)); border-radius:2px}
+  .strings i:nth-child(1){height:1px} .strings i:nth-child(2){height:1px}
+  .strings i:nth-child(3){height:1.5px} .strings i:nth-child(4){height:2px}
+  .strings i:nth-child(5){height:2.5px} .strings i:nth-child(6){height:3.5px}
+
+  /* charts */
+  .chart{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:1.5rem 1.5rem 1.6rem; margin:1.4rem 0; box-shadow:var(--shadow);
+  }
+  .chart h3{margin:0 0 .2rem}
+  .chart .cap{font-size:.9rem; color:var(--ink-soft); margin:0 0 1.25rem}
+  .bar-row{display:grid; grid-template-columns:5.7rem 1fr auto; align-items:center; gap:.85rem; margin:.55rem 0}
+  .bar-label{font-size:.82rem; font-weight:500; display:flex; align-items:center; gap:.45rem}
+  .swatch{width:.7rem; height:.7rem; border-radius:2px; flex:none}
+  .up .swatch,.sw-up{background:var(--up)} .down .swatch,.sw-down{background:var(--down)}
+  .track{background:var(--line-soft); border-radius:6px; height:1.5rem; overflow:hidden}
+  .fill{height:100%; width:var(--w); border-radius:6px; transform-origin:left}
+  .fill.up{background:linear-gradient(90deg,var(--up),color-mix(in srgb,var(--up) 78%,#fff))}
+  .fill.down{background:linear-gradient(90deg,var(--down),color-mix(in srgb,var(--down) 80%,#fff))}
+  .bar-val{font-family:"IBM Plex Mono",monospace; font-size:.92rem; font-weight:500; font-variant-numeric:tabular-nums; min-width:3.1rem; text-align:right}
+  .up .bar-val{color:var(--up-ink)} .down .bar-val{color:var(--down-ink)}
+  @media (prefers-reduced-motion:no-preference){
+    .fill{animation:grow 1.1s cubic-bezier(.22,.61,.36,1) both}
+    @keyframes grow{from{width:0}to{width:var(--w)}}
+  }
+
+  .pull{
+    font-family:"Fraunces",Georgia,serif; font-size:clamp(1.3rem,3.4vw,1.7rem);
+    font-weight:500; line-height:1.32; color:var(--ink); text-wrap:balance;
+    border-left:3px solid var(--up); padding:.1rem 0 .1rem 1.2rem; margin:2.2rem 0;
+  }
+
+  .aside{
+    background:var(--raise); border:1px solid var(--line); border-radius:14px;
+    padding:1.4rem 1.55rem; margin:2rem 0;
+  }
+  .aside h3{color:var(--down-ink); margin:0 0 .5rem; font-family:"IBM Plex Mono",monospace;
+    font-size:.78rem; letter-spacing:.16em; text-transform:uppercase; font-weight:500}
+  .aside p:last-child{margin-bottom:0}
+  .aside ul{margin:0; padding-left:1.1rem}
+  .aside li{margin:.4rem 0; color:var(--ink-soft)}
+
+  footer{margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--line);
+    font-size:.86rem; color:var(--ink-faint)}
+  footer a{color:var(--up-ink); text-underline-offset:2px}
+  .legend{display:flex; gap:1.3rem; font-size:.78rem; color:var(--ink-soft);
+    font-family:"IBM Plex Mono",monospace; margin:.2rem 0 1.3rem}
+  .legend span{display:flex; align-items:center; gap:.4rem}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">A field experiment · one guitar</p>
+  <h1>Tune up, or tune down?</h1>
+  <p class="dek">Guitarists are told to always finish tuning a string upward. I spent five days measuring whether it&rsquo;s still true.</p>
+  <p class="byline">Experiment &amp; data by <b>Egg Syntax</b> &middot; Data analysis &amp; writing by <b class="ai">Claude Opus 4.8</b></p>
+  <div class="meta">
+    <span><b>Instrument:</b> PRS SE McCarty 594 Singlecut (2023)</span>
+    <span><b>Window:</b> 10&ndash;14 Aug 2026</span>
+    <span><b>Measurements:</b> 138</span>
+    <span><b>Threshold:</b> 3 cents</span>
+  </div>
+
+  <div class="strings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <p class="lead">There&rsquo;s a piece of advice that circulates among guitarists: when you tune a string, finish by bringing it <strong>up</strong> to the right pitch, not <strong>down</strong>. The idea is that easing up into pitch leaves the string seated and settled, while coming down from above leaves a little slack that later slips &mdash; so the string drifts out of tune sooner.</p>
+  <p class="lead">It&rsquo;s plausible, it&rsquo;s widely repeated, and it may well have been true for older strings and hardware. But is it still true today? I decided to actually measure it.</p>
+
+  <h2>How the test worked</h2>
+  <p>The trick to a fair test is separating the thing I care about &mdash; tuning <em>direction</em> &mdash; from two things that muddy it:</p>
+  <p><strong>The weather.</strong> Temperature and humidity constantly nudge every string at once, so you can&rsquo;t just tune up one day, down the next, and compare.</p>
+  <p><strong>The strings themselves.</strong> A thick wound low E behaves differently from a thin plain high E no matter how you tune it.</p>
+  <p>So I did two things. On every check, <strong>half the strings were finished up and half finished down</strong>, alternating across the neck. Because all six are checked at the same moment, whatever the weather is doing hits both groups equally and cancels out. Then I ran the whole thing <strong>again with the roles swapped</strong> &mdash; the strings tuned up in the first run were tuned down in the second. If tuning up wins in <em>both</em> runs, it&rsquo;s really about direction; if the same physical strings win both times, it&rsquo;s just those strings being stubborn. Running it both ways tells those apart.</p>
+  <p>Over about five days I repeatedly checked all six strings and noted any that had drifted more than 3 cents off pitch. (A cent is a hundredth of a semitone; 3 cents is roughly the smallest error a good ear starts to notice.) That gave 23 full check-ins across the two runs, a total of 138 data points.</p>
+
+  <h2>What I found</h2>
+  <p class="legend" aria-hidden="true">
+    <span><i class="swatch sw-up"></i> finished up</span>
+    <span><i class="swatch sw-down"></i> finished down</span>
+  </p>
+
+  <div class="chart">
+    <h3>How <em>often</em> a string went out of tune</h3>
+    <p class="cap">Chance of being off by more than 3 cents on any given check.</p>
+    <div class="bar-row up">
+      <span class="bar-label"><i class="swatch"></i>Up</span>
+      <div class="track"><div class="fill up" style="--w:49%"></div></div>
+      <span class="bar-val">49%</span>
+    </div>
+    <div class="bar-row down">
+      <span class="bar-label"><i class="swatch"></i>Down</span>
+      <div class="track"><div class="fill down" style="--w:65%"></div></div>
+      <span class="bar-val">65%</span>
+    </div>
+  </div>
+
+  <div class="chart">
+    <h3>How <em>far</em> a string drifted</h3>
+    <p class="cap">Average distance from correct pitch, in cents (lower is steadier).</p>
+    <div class="bar-row up">
+      <span class="bar-label"><i class="swatch"></i>Up</span>
+      <div class="track"><div class="fill up" style="--w:53.3%"></div></div>
+      <span class="bar-val">3.2c</span>
+    </div>
+    <div class="bar-row down">
+      <span class="bar-label"><i class="swatch"></i>Down</span>
+      <div class="track"><div class="fill down" style="--w:83.3%"></div></div>
+      <span class="bar-val">5.0c</span>
+    </div>
+  </div>
+
+  <p>Strings finished by tuning up went out of tune noticeably less often &mdash; a gap of about 16 percentage points &mdash; and sat closer to pitch on average across all the checks. When strings <em>were</em> out of tune, the ones tuned down weren&rsquo;t much further out than the ones tuned up. So the advantage of tuning up isn&rsquo;t that it shrinks the misses &mdash; it&rsquo;s that it makes them happen less often. That&rsquo;s where the overall gap comes from.</p>
+
+  <h2>How sure am I?</h2>
+  <p>Fairly, for this guitar. The advantage showed up in <strong>both</strong> runs and for <strong>five of the six strings</strong> &mdash; and the two mild exceptions disagreed with each other, so no single string was quietly working against the pattern. Putting a number on it, the analysis puts the probability that tuning up genuinely helps at roughly <strong>96&ndash;99%</strong>, for both how often and how far.</p>
+  <p>I also stress-tested the statistical analysis. Because a guitar&rsquo;s strings share one neck and react to the same room together, the measurements aren&rsquo;t fully independent, and naive statistics can be fooled by that. Redoing the analysis to account for it didn&rsquo;t weaken the conclusion &mdash; if anything it held up slightly better, because that shared movement affects the up and down strings together and cancels out of the comparison.</p>
+
+  <div class="aside">
+    <h3>Caveats</h3>
+    <p>The big one: <strong>this is one guitar over five days.</strong> Enough to see a clear pattern on <em>this</em> instrument &mdash; not enough to declare a universal law. A different guitar, different strings, older hardware, or a different climate could shift the result. Treat it as a well-controlled case study, not the final word.</p>
+    <ul>
+      <li>Strings were re-tuned only to within 3 cents, not always dead-on, which could blur things slightly.</li>
+      <li>A handful of the earliest readings recorded direction but not exact size, so they count toward &ldquo;how often&rdquo; but not &ldquo;how far.&rdquo;</li>
+    </ul>
+  </div>
+
+  <h2>Bottom line</h2>
+  <p>On my guitar, the old advice held up: <strong>finishing a string by tuning up to pitch really did keep it in tune better</strong> &mdash; out of tune about 16 percentage points less often, and drifting a little less far. The effect is modest, not dramatic, and it&rsquo;s one instrument&rsquo;s worth of evidence. But if you&rsquo;ve ever wondered whether &ldquo;always tune up&rdquo; is worth the small extra fuss of overshooting and coming back, this experiment says: yes, probably.</p>
+
+  <footer>
+    A <a href="https://claude.ai/code/artifact/a8912362-3f32-4930-8653-0cb145dc396c">full technical write-up</a> &mdash; with the raw data and the analysis code &mdash; is available for anyone who wants to check the work.
+  </footer>
+</div>

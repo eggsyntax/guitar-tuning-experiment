@@ -1,0 +1,280 @@
+<title>Tuning Direction Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+  :root{
+    --paper:#F7F5F0; --surface:#FCFAF6; --raise:#F1ECE2;
+    --ink:#23201B; --ink-soft:#544D43; --ink-faint:#8A8175;
+    --line:#E1DBCF; --line-soft:#ECE7DC;
+    --brass:#8A5E12; --brass-bg:#F3E9D5;
+    --steel:#33586B;
+    --code:#6A4C86;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#17140F; --surface:#1F1A13; --raise:#241E16;
+      --ink:#ECE6D9; --ink-soft:#B0A694; --ink-faint:#847A69;
+      --line:#322B20; --line-soft:#28211896;
+      --brass:#D9A24A; --brass-bg:#2A2214;
+      --steel:#8FB9D0;
+      --code:#C0A6DC;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#17140F; --surface:#1F1A13; --raise:#241E16;
+    --ink:#ECE6D9; --ink-soft:#B0A694; --ink-faint:#847A69;
+    --line:#322B20; --line-soft:#282118;
+    --brass:#D9A24A; --brass-bg:#2A2214;
+    --steel:#8FB9D0;
+    --code:#C0A6DC;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:16px; line-height:1.62; margin:0;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:46rem; margin:0 auto; padding:clamp(1.6rem,4vw,3.5rem) clamp(1.1rem,4vw,2rem) 4rem}
+  p{margin:0 0 1em}
+  strong{font-weight:600}
+  em{font-style:italic}
+  a{color:var(--brass); text-underline-offset:2px}
+  sup a{text-decoration:none; font-size:.72em; padding:0 .12em}
+  .footnotes{margin-top:2.4rem; padding-top:1rem; border-top:1px solid var(--line);
+     font-size:.85rem; color:var(--ink-soft)}
+  .footnotes p{margin:0}
+  .footnotes .fnnum{font-family:"IBM Plex Mono",monospace; color:var(--brass); margin-right:.5rem}
+  .fnback{margin-left:.4rem; text-decoration:none}
+
+  /* masthead */
+  .top-rule{height:3px; background:var(--brass); border-radius:2px; margin-bottom:1.6rem; max-width:4rem}
+  h1{font-family:"Fraunces",Georgia,serif; font-weight:600; line-height:1.12;
+     font-size:clamp(1.85rem,4.6vw,2.7rem); letter-spacing:-.012em; text-wrap:balance; margin:0}
+  .studyline{font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:var(--ink-faint);
+     letter-spacing:.02em; margin:.9rem 0 0}
+
+  .metacard{background:var(--surface); border:1px solid var(--line); border-radius:12px;
+     padding:1.1rem 1.25rem; margin:1.8rem 0; font-size:.92rem}
+  .metacard dl{display:grid; grid-template-columns:auto 1fr; gap:.5rem 1rem; margin:0}
+  .metacard dt{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.12em;
+     text-transform:uppercase; color:var(--brass); padding-top:.15rem}
+  .metacard dd{margin:0; color:var(--ink-soft)}
+  .metacard dd b{color:var(--ink); font-weight:600}
+
+  /* TOC */
+  nav.toc{border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+     padding:1rem 0; margin:1.8rem 0 2.4rem}
+  nav.toc p{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.14em;
+     text-transform:uppercase; color:var(--ink-faint); margin:0 0 .6rem}
+  nav.toc ol{margin:0; padding:0; list-style:none; columns:2; column-gap:2rem}
+  nav.toc li{font-size:.92rem; margin:.22rem 0; break-inside:avoid}
+  nav.toc a{color:var(--ink-soft); text-decoration:none}
+  nav.toc a:hover{color:var(--brass)}
+  nav.toc .num{font-family:"IBM Plex Mono",monospace; color:var(--brass); font-size:.82rem; margin-right:.5rem}
+
+  h2{font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(1.3rem,3vw,1.7rem);
+     letter-spacing:-.008em; margin:2.6rem 0 .8rem; scroll-margin-top:1rem; text-wrap:balance}
+  h2 .num{color:var(--brass); font-size:.75em; margin-right:.55rem; font-variant-numeric:tabular-nums}
+  h3{font-size:1.02rem; font-weight:600; margin:1.8rem 0 .5rem;
+     font-family:"IBM Plex Sans",sans-serif; color:var(--ink)}
+  h3 .num{font-family:"IBM Plex Mono",monospace; color:var(--brass); font-size:.85rem; margin-right:.45rem}
+
+  ul,ol.body{margin:0 0 1em; padding-left:1.25rem}
+  li{margin:.4rem 0}
+  li strong{font-weight:600}
+
+  code{font-family:"IBM Plex Mono",monospace; font-size:.86em; color:var(--code);
+     background:var(--raise); padding:.1em .38em; border-radius:5px}
+
+  .callout{background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--brass);
+     border-radius:0 10px 10px 0; padding:.9rem 1.15rem; margin:1.3rem 0; font-size:.95rem}
+  .callout p:last-child{margin-bottom:0}
+  .callout .lbl{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.13em;
+     text-transform:uppercase; color:var(--brass); display:block; margin-bottom:.3rem}
+
+  .tbl-scroll{overflow-x:auto; margin:1.2rem 0}
+  table{border-collapse:collapse; width:100%; font-size:.9rem;
+     font-variant-numeric:tabular-nums}
+  caption{caption-side:top; text-align:left; font-size:.86rem; color:var(--ink-soft); margin-bottom:.5rem}
+  th,td{padding:.5rem .7rem; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.06em;
+     text-transform:uppercase; color:var(--ink-faint); font-weight:500; border-bottom:1.5px solid var(--ink-faint)}
+  tbody tr:last-child td{border-bottom:1.5px solid var(--line)}
+  td.num,th.num{font-family:"IBM Plex Mono",monospace}
+  .pos{color:var(--brass); font-weight:500}
+
+  hr{border:none; border-top:1px solid var(--line); margin:2.6rem 0}
+  .appendix code{background:none; color:var(--code); padding:0}
+  .appendix li{color:var(--ink-soft)}
+  footer{margin-top:2.6rem; padding-top:1.2rem; border-top:1px solid var(--line);
+     font-size:.82rem; color:var(--ink-faint); font-family:"IBM Plex Mono",monospace}
+</style>
+
+<div class="wrap">
+  <div class="top-rule"></div>
+  <h1>Does finishing a tuning &ldquo;up to pitch&rdquo; make a guitar string more stable?</h1>
+  <p class="studyline">Full report &middot; single-guitar empirical study &middot; 10&ndash;14 August 2026</p>
+
+  <div class="metacard">
+    <dl>
+      <dt>Authors</dt>
+      <dd>Experiment design &amp; data collection by <b>Egg Syntax</b>. Data analysis &amp; writing by <b>Claude Opus 4.8</b>.</dd>
+      <dt>Instrument</dt>
+      <dd><a href="https://prsguitars.com/electrics/model/se_mccarty_594_singlecut_2023">PRS SE McCarty 594 Singlecut (2023)</a><sup><a href="#fn1" id="fnref1">1</a></sup> &mdash; a <b>stoptail (hardtail)</b>: no tremolo, which removes one common, large source of tuning instability. The features most plausibly relevant to tuning stability are its PRS synthetic nut (1&#8209;11/16&Prime; wide), vintage-style tuning machines, and its strings: Pyramid Pure Nickel Classics, round core, R450 Light gauge (.009&ndash;.042). (Body/neck woods, pickups, and fret details are omitted as unlikely to bear on the question.)</dd>
+    </dl>
+  </div>
+
+  <nav class="toc">
+    <p>Contents</p>
+    <ol>
+      <li><a href="#s1"><span class="num">1</span>Question</a></li>
+      <li><a href="#s2"><span class="num">2</span>Design</a></li>
+      <li><a href="#s3"><span class="num">3</span>Data collection &amp; translation</a></li>
+      <li><a href="#s4"><span class="num">4</span>Analysis</a></li>
+      <li><a href="#s5"><span class="num">5</span>Limitations</a></li>
+      <li><a href="#s6"><span class="num">6</span>Conclusion</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="s1"><span class="num">1</span>Question</h2>
+  <p>A long-standing piece of guitar lore holds that a string will hold its tuning better if you finish tuning it by moving <strong>up</strong> to the target pitch (approaching from flat) rather than <strong>down</strong> (approaching from sharp). The stated mechanism is that coming down leaves slack / an unseated string at the nut and tuning post, which later slips. Whether this is still meaningfully true &mdash; with modern strings, nuts, and machine heads &mdash; is unclear. This study tests it empirically on one guitar.</p>
+  <div class="callout">
+    <span class="lbl">Hypothesis (the &ldquo;maxim&rdquo;)</span>
+    <p>Strings finished <em>up</em> to pitch go out of tune less often and/or by less than strings finished <em>down</em> to pitch.</p>
+  </div>
+
+  <h2 id="s2"><span class="num">2</span>Design</h2>
+  <p>The core problem is separating a <em>tuning-direction</em> effect from two nuisances:</p>
+  <ol class="body">
+    <li><strong>Environment</strong> &mdash; temperature/humidity drift move all strings together and continuously.</li>
+    <li><strong>String identity</strong> &mdash; strings differ physically (plain vs wound, gauge, nut friction), so some are intrinsically more stable regardless of how they were tuned.</li>
+  </ol>
+  <p>The design handles both:</p>
+  <ul>
+    <li><strong>Alternating directions within the instrument.</strong> On any given sweep, half the strings were finished up and half down, alternating by string number. Because all six are measured at the same instant, any environmental shift is <em>common-mode</em> and cancels when up-strings are compared to down-strings <strong>within the same sweep</strong>.</li>
+    <li><strong>Reversed polarity across two experiments.</strong> In <strong>Experiment 1</strong> the even strings (2/B, 4/D, 6/low-E) were finished up and the odds (1/high-E, 3/G, 5/A) down. In <strong>Experiment 2</strong> the assignment was reversed. If &ldquo;up is more stable&rdquo; appears in <em>both</em> experiments, it tracks direction; if instead the same physical strings always win, it is string identity. Combining the two experiments with <strong>equal weight</strong> cancels string identity (in Exp 1 the &ldquo;up&rdquo; group is wound-heavy; in Exp 2 the &ldquo;down&rdquo; group is &mdash; the confound flips sign and averages out).</li>
+  </ul>
+  <p>Standard string numbering is used throughout: 1 = high E, 2 = B, 3 = G, 4 = D, 5 = A, 6 = low E.</p>
+
+  <h2 id="s3"><span class="num">3</span>Data collection and translation</h2>
+  <p>The raw record is a timestamped log: each row is a moment at which one string was found more than 3 cents off pitch, with the signed error in cents (&minus; = flat, + = sharp). By protocol, <strong>every logged reading implies a full sweep</strong> &mdash; all six strings were checked at that time (&plusmn; ~3 min) and any not listed were within &plusmn;3 cents (treated as &ldquo;in tune&rdquo;). This rule was confirmed to hold for every reading, including single-string sweeps.</p>
+  <p>The two source spreadsheets were translated into a tidy long table (<code>tuning_data_tidy.csv</code>), one row per (sweep &times; string), with explicit in-tune rows filled in. Decisions made during translation:</p>
+  <ul>
+    <li><strong>Experiment 2 dates were a spreadsheet drag-fill artifact.</strong> Within each block the time-of-day was identical to the second while the date incremented one day per row &mdash; an impossible pattern for real independent timestamps. Each identical-time block was collapsed to a single sweep on its first date. (One block whose dates were genuinely all the same was left untouched.) This puts Experiment 2 on 13&ndash;14 August and the whole study in a ~5-day window, consistent with the experimenter&rsquo;s recollection.</li>
+    <li><strong>13 early &ldquo;symbol-only&rdquo; readings</strong> recorded only direction (&minus;/^), not magnitude. These are kept and flagged (<code>magnitude_quality = unknown</code>); they are valid out-of-tune events usable for the <strong>frequency</strong> analysis, and excluded only from the <strong>magnitude</strong> analysis.</li>
+    <li><strong>One blank cell</strong> (10 Aug 20:45, string 6) was interpolated to &minus;6 cents (the mean of the other flat strings in that sweep) and flagged <code>interpolated</code>.</li>
+  </ul>
+  <p>Final dataset: <strong>23 sweeps, 138 string-observations</strong> (69 finished up, 69 down).</p>
+
+  <h2 id="s4"><span class="num">4</span>Analysis</h2>
+  <p><strong>Unit of analysis:</strong> the <em>within-sweep</em> up-vs-down contrast (differences out both environment and elapsed-time-since-last-tuning, since the compared strings share the same sweep). Sweeps are combined within an experiment, then the two experiments are combined <strong>equal-weight</strong>.</p>
+  <p><strong>Two outcomes:</strong></p>
+  <ul>
+    <li><strong>Frequency</strong> &mdash; did the string go out of tune (binary). Uses all rows, including symbol-only.</li>
+    <li><strong>Magnitude</strong> &mdash; how far out, |cents|, with in-tune counted as 0 (unconditional expected absolute error). Uses measured rows only.</li>
+  </ul>
+  <p><strong>Sign convention throughout:</strong> effect = (down &minus; up), so a <strong>positive</strong> number means <strong>up is more stable</strong> (supports the maxim); a <strong>negative</strong> number means <strong>down is more stable</strong> (contradicts it).</p>
+
+  <div class="tbl-scroll">
+    <table>
+      <caption>Raw cell rates (out of tune / total; mean |cents|).</caption>
+      <thead><tr><th>cell</th><th class="num">out-rate</th><th class="num">mean |cents|</th></tr></thead>
+      <tbody>
+        <tr><td>Exp 1 up (2,4,6)</td><td class="num">27/51 = 0.53</td><td class="num">2.89</td></tr>
+        <tr><td>Exp 1 down (1,3,5)</td><td class="num">31/51 = 0.61</td><td class="num">3.80</td></tr>
+        <tr><td>Exp 2 up (1,3,5)</td><td class="num">8/18 = 0.44</td><td class="num">3.56</td></tr>
+        <tr><td>Exp 2 down (2,4,6)</td><td class="num">13/18 = 0.72</td><td class="num">6.17</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="s41"><span class="num">4.1</span>Frequentist</h3>
+  <div class="callout">
+    <span class="lbl">Null hypothesis (H&#8320;)</span>
+    <p>Tuning direction has no effect on stability &mdash; a string is equally likely to go out of tune, and drifts equally far, whether it was finished up or down. Each p-value below is the probability of a result at least as extreme as the one observed <em>if H&#8320; is true</em>; a small value is evidence against H&#8320; and in favor of a real direction effect.</p>
+  </div>
+  <p><em>Within-sweep contrast, equal-weight combined, p-value from a within-sweep label permutation (each sweep splits exactly 3 up / 3 down; 50,000 permutations):</em></p>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>outcome</th><th class="num">Exp 1</th><th class="num">Exp 2</th><th class="num">combined</th><th class="num">p (1-sided)</th><th class="num">p (2-sided)</th></tr></thead>
+      <tbody>
+        <tr><td>frequency (out-rate)</td><td class="num">+0.078</td><td class="num">+0.278</td><td class="num pos">+0.178</td><td class="num">0.029</td><td class="num">0.058</td></tr>
+        <tr><td>magnitude (mean |cents|)</td><td class="num">+0.91</td><td class="num">+2.61</td><td class="num pos">+1.76</td><td class="num">0.015</td><td class="num">0.032</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Both effects are positive in <strong>both</strong> experiments.</p>
+  <p><em>String-level paired test (each string compared to itself, up-experiment vs down-experiment; n = 6; exact identity control):</em> <strong>5 of 6 strings favor up on both outcomes.</strong> The two dissents are different strings on different metrics and both tiny (string 6 on frequency, &minus;0.09; string 5 on magnitude, &minus;1.2 c); <strong>no string is consistently against the maxim.</strong> Sign-test p = 0.22 (underpowered at n = 6); mean paired difference +0.18 out-rate and +1.8 c.</p>
+
+  <h3 id="s42"><span class="num">4.2</span>Bayesian</h3>
+  <p><em>Beta-Binomial (uniform prior) for frequency; Bayesian bootstrap of the mean for magnitude; each computed per experiment &times; direction and combined equal-weight (200,000 draws).</em></p>
+  <p><strong>Q1 &mdash; probability a string is out of tune:</strong></p>
+  <ul>
+    <li>P(out | up) = <strong>0.49</strong> (90% CrI 0.38&ndash;0.60)</li>
+    <li>P(out | down) = <strong>0.65</strong> (0.55&ndash;0.75)</li>
+    <li>difference +0.16 (0.02&ndash;0.31) &rarr; <strong>P(up more stable) = 96.5%</strong></li>
+  </ul>
+  <p><strong>Q2 &mdash; expected drift E|cents| (unconditional):</strong></p>
+  <ul>
+    <li>E|c| up = <strong>3.2 c</strong> (2.3&ndash;4.2)</li>
+    <li>E|c| down = <strong>5.0 c</strong> (3.9&ndash;6.1)</li>
+    <li>difference +1.8 c (0.35&ndash;3.19) &rarr; <strong>P(up drifts less) = 98%</strong></li>
+  </ul>
+  <div class="callout">
+    <span class="lbl">Mechanism note</span>
+    <p>Conditional on a string <em>having gone out of tune</em>, the two directions are similar in severity (Exp 1: 6.2 c up vs 7.0 c down; Exp 2: 8.0 vs 8.5) &mdash; small differences relative to the spread, and not the driver. So the ~1.8 c unconditional advantage comes almost entirely from up-strings going out <strong>less often</strong>, not from being <strong>less far out</strong> when they do. Frequency is the mechanism; magnitude inherits it.</p>
+  </div>
+
+  <h3 id="s43"><span class="num">4.3</span>Robustness to correlated observations</h3>
+  <p>The naive tests assume all 138 observations are independent; they are not (strings share a neck and a moment; nearby sweeps share slow-moving state). A cluster/sweep-level bootstrap (resampling <strong>whole sweeps</strong>, stratified by experiment) was run to check this.</p>
+  <p>The point estimates are unchanged, and &mdash; counterintuitively &mdash; the <strong>difference</strong> intervals did not widen; they slightly <strong>tightened</strong>, and P(maxim) rose to <strong>&asymp;0.995</strong> on both outcomes:</p>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>quantity</th><th class="num">naive</th><th class="num">sweep-clustered</th></tr></thead>
+      <tbody>
+        <tr><td>diff, frequency</td><td class="num">+0.16 [0.02, 0.31]</td><td class="num">+0.18 [0.06, 0.29]</td></tr>
+        <tr><td>diff, magnitude</td><td class="num">+1.8 [0.35, 3.19]</td><td class="num">+1.8 [0.66, 2.70]</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>Why:</strong> the within-sweep correlation is <em>positive</em> (a common shock moves all strings the same way), and for a <strong>difference</strong> that shared movement cancels (Var(down&minus;up) = Var(down)+Var(up) &minus; 2&middot;Cov, Cov &gt; 0). The naive model treated up and down as independent and thereby <em>overstated</em> the difference&rsquo;s uncertainty. The dependence weakens claims about the <em>absolute</em> rates (those marginal intervals are genuinely wide) but <strong>strengthens</strong> the <em>comparative</em> claim, which is the one of interest. The result is therefore not an artifact of pseudo-replication.</p>
+
+  <h2 id="s5"><span class="num">5</span>Limitations</h2>
+  <ul>
+    <li><strong>One guitar, ~5 days.</strong> The strongest limitation: this is a single instrument over a short window. The effect size and even its existence could differ across guitars, string brands, string age, and climates. This is a case study, not a population estimate.</li>
+    <li><strong>Absolute rates are uncertain.</strong> The comparative effect is well-supported, but the individual probabilities (&asymp;49% vs &asymp;65%) have wide intervals.</li>
+    <li><strong>Re-tuning carryover.</strong> Strings were reset only to within 3 cents, not exactly to pitch, so a string could start a period already partway out. Expected to be minor; not modeled.</li>
+    <li><strong>Uneven exposure between sweeps.</strong> Intervals between sweeps varied (minutes to overnight). This cancels under the within-sweep contrast but would matter for any naive/pooled view; noted, not a threat to the primary analysis.</li>
+    <li><strong>Mechanical coupling.</strong> Retuning one string slightly detunes its neighbors through neck flex; mitigated by not always tuning in the same order.</li>
+    <li><strong>&ldquo;All-sharp&rdquo;/&ldquo;all-flat&rdquo; sweeps</strong> (large synchronized environmental moves) carry no up-vs-down information and act as ties; they neither bias nor help the paired contrast.</li>
+    <li><strong>Symbol-only rows</strong> contribute to frequency but not magnitude, so the two outcomes rest on slightly different subsets.</li>
+  </ul>
+
+  <h2 id="s6"><span class="num">6</span>Conclusion</h2>
+  <p>On this guitar, the data give <strong>modest but consistent support for the maxim</strong>: finishing a string up to pitch made it go out of tune roughly <strong>16 percentage points less often</strong> (&asymp;49% vs &asymp;65% chance of being out on a given check) and drift about <strong>1.8 cents less</strong> on average. The effect is positive in both reversed-polarity experiments and for five of six strings, is driven by <em>frequency of going out</em> rather than severity, and <em>strengthens</em> rather than dissolves when observations are conservatively clustered by sweep (posterior probability the maxim holds &asymp; 0.99). The main caveat is external validity: it is one instrument over five days. Within those bounds, &ldquo;tune up to pitch&rdquo; earns its keep.</p>
+
+  <hr>
+  <div class="appendix">
+    <h3>Appendix: files</h3>
+    <p>Data lives in <code>data/</code>, analysis code in <code>scripts/</code>. Each script resolves the data directory relative to itself, so it runs from anywhere (e.g. <code>python3 scripts/freq_test.py</code>).</p>
+    <ul>
+      <li><code>data/tuning_data_tidy.csv</code> &mdash; analysis dataset (long form); <code>scripts/translate.py</code> &mdash; its generator.</li>
+      <li><code>data/tuning_data_wide.csv</code> / <code>scripts/wide_view.py</code> &mdash; human-readable sweeps &times; strings view.</li>
+      <li><code>scripts/freq_test.py</code> &mdash; frequentist within-sweep permutation + string-level paired test.</li>
+      <li><code>scripts/bayes.py</code> &mdash; Bayesian frequency (Beta-Binomial) and magnitude (Bayesian bootstrap).</li>
+      <li><code>scripts/robustness.py</code> &mdash; sweep-level cluster bootstrap.</li>
+      <li><code>data/*.pdf</code> &mdash; the original source spreadsheets.</li>
+    </ul>
+  </div>
+
+  <div class="footnotes">
+    <p id="fn1"><span class="fnnum">1</span> A fantastic guitar that punches well above its price, and the one I play the most &mdash; which is why it&rsquo;s the instrument tested. <a href="#fnref1" class="fnback">&#8617;</a></p>
+  </div>
+
+  <footer>Full technical report &middot; companion to the <a href="https://claude.ai/code/artifact/b12ce579-4f74-4c3a-8a56-0e0531d4c0a0">general-audience summary</a> &middot; public repository link forthcoming.</footer>
+</div>
