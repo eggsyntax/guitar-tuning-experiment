@@ -93,4 +93,5 @@ of evidence. But if you've ever wondered whether "always tune up" is worth the s
 fuss of overshooting and coming back, this little experiment says: yes, probably.
 
 *(A [full technical write-up](REPORT_full.md), with the data and analysis code, is available
-for anyone who wants to check the work.)*
+for anyone who wants to check the work — see the
+[GitHub repo](https://github.com/eggsyntax/guitar-tuning-experiment).)*

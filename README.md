@@ -17,7 +17,9 @@ maxim holds ≈ 0.99). Caveat: one guitar, five days — a case study, not a pop
 - **[Full technical report](REPORT_full.md)** — design, data translation, frequentist +
   Bayesian analysis, robustness, limitations.
 
-The reports are also published as web pages (links to be added once the repo is public).
+The reports are also published as standalone web pages:
+**[general-audience summary](https://claude.ai/code/artifact/b12ce579-4f74-4c3a-8a56-0e0531d4c0a0)**
+· **[full technical report](https://claude.ai/code/artifact/a8912362-3f32-4930-8653-0cb145dc396c)**.
 
 ## Repository layout
 

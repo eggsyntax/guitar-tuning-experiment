@@ -215,4 +215,4 @@ relative to itself, so it can be run from anywhere (`python3 scripts/freq_test.p
 - `scripts/robustness.py` — sweep-level cluster bootstrap.
 - `data/*.pdf` — the original source spreadsheets.
 
-*Companion: the [general-audience summary](REPORT_general.md). Public repository link forthcoming.*
+*Companion: the [general-audience summary](REPORT_general.md). Source, data, and code: [github.com/eggsyntax/guitar-tuning-experiment](https://github.com/eggsyntax/guitar-tuning-experiment).*
